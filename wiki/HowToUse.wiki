@@ -1,0 +1,28 @@
+#summary Explains how to compile and use MrsRF.
+
+= Introduction =
+
+MrsRF is a multi-core algorithm utilizing MapReduce to calculate large Robinson Foulds(RF) distance matrices. 
+
+The input to MrsRF is a NewickTree file containing _t_ trees. The output is a _t x t_ distance matrix.
+
+
+=== To compile ===
+From the home directory:
+  * `cd` into the `src\` directory. Type `make` to make all the executables. 
+  * `cd` into the `hashbase\` directory. Type `./configure` followed by `make`.
+This will create all the executables necessary for MrsRF to work.
+
+=== List of Created Executables === 
+In `src\`:
+  * `mrsrf`
+    * Works on _k_ nodes to create a _t x t_ matrix.
+    * Calls `mrsrf-pq` to create RF submatrices. 
+  * `mrsrf-pq`
+    * Used in conjunction with `mrsrf`.
+    * Creates a matrix of size _p x q_. 
+=
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
