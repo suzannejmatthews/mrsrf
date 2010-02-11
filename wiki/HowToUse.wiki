@@ -62,7 +62,7 @@ This should produce the following RF Matrix:
 5 5 5 1 2 1 2 0 1 1 5 0 
 }}}
 
-In the MrsRF release, you will find a sample tree file called '10taxa-12trees.tre`. By running MrsRF on that sample file, you should see the above RF matrix produced.
+In the MrsRF release, you will find a sample tree file called `10taxa-12trees.tre`. By running MrsRF on that sample file, you should see the above RF matrix produced.
 
 === Notes ===
 If the code does not compile out of box, it may be necessary to reset the `CPU_SET` definitions in `MapReduceScheduler.c`. This is due to architectural differences we have encountered over different machines.
