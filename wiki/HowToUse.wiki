@@ -62,6 +62,15 @@ This should produce the following RF Matrix:
 5 5 5 1 2 1 2 0 1 1 5 0 
 }}}
 
+In the MrsRF release, you will find a sample tree file called '10taxa-12trees.tre`. By running MrsRF on that sample file, you should see the above RF matrix produced.
+
 === Notes ===
 If the code does not compile out of box, it may be necessary to reset the `CPU_SET` definitions in `MapReduceScheduler.c`. This is due to architectural differences we have encountered over different machines.
   * Please comment out the code associated with "new definitions" and uncomment the code section associated with "old definitions". This should be located near the top of `src/MapReduceScheduler.c`
+
+To compare the matrix your program genereates with ours, a Perl script called `compare_files.pl` is provided in the `peanuts` folder. This script can be used to compare two matrices. Alternatively, you can use:
+{{{
+diff -iB matrix1 matrix2
+}}}
+
+where `matrix1` and `matrix2` are the files containing the two matrices to be compared, respectively.
