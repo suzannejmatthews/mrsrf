@@ -27,7 +27,7 @@ In `hashbase\`:
 === Usage ===
 To run MrsRF on _N_ nodes and _c_ cores, run the following command in the main directory:
 
-`mpirun -np <N> src/mrsrf <input file> <number of taxa> <number of trees> <cores> <output> <rounds>`
+`mpirun -np <N> src/mrsrf <cores> <input file> <number of taxa> <number of trees> <output> <rounds>`
 
 
 Where:
@@ -42,7 +42,7 @@ Where:
 For example, to run `mrsrf` on 2 nodes and 4 cores, using an input file specified by `test.tre` which contains 12 trees with 10 taxa each, run the following:
 
 {{{
-mpirun -np 2 src/mrsrf test.tre 10 12 4 1 1 
+mpirun -np 2 src/mrsrf 4 test.tre 10 12 1 1 
 }}}
 
 This should produce the following RF Matrix:
