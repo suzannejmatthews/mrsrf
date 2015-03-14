@@ -1,0 +1,73 @@
+MrsRF is a multi-core algorithm utilizing MapReduce to calculate large Robinson Foulds(RF) distance matrices.
+
+The input to MrsRF is a NewickTree file containing _t_ trees. The output is a _t x t_ distance matrix.
+
+
+### To compile ###
+From the home directory:
+  * `cd` into the `src\` directory. Type `make` to make all the executables.
+  * `cd` into the `hashbase\` directory. Type `./configure` followed by `make`.
+This will create all the executables necessary for MrsRF to work.
+
+
+### List of Created Executables ###
+In `src\`:
+  * `mrsrf`
+    * Works on _k_ nodes to create a _t x t_ matrix.
+    * Calls `mrsrf-pq` to create RF submatrices.
+  * `mrsrf-pq`
+    * Used in conjunction with `mrsrf`.
+    * Creates a matrix of size _p x q_.
+In `hashbase\`:
+  * `hashbase`
+    * Extracts the bipartitions located in the input tree file and outputs a listing of bipartitions and the trees sharing it.
+
+### Usage ###
+To run MrsRF on _N_ nodes and _c_ cores, run the following command in the main directory:
+
+`mpirun -np <N> src/mrsrf <cores> <input file> <number of taxa> <number of trees> <output> <rounds>`
+
+
+Where:
+  * `<`N`>` represents the number of nodes
+  * `<`cores`>` represents the number of cores
+  * `<`input file`>` is the input file to the program
+  * `<`number of taxa`>` number of taxa represented by the input file
+  * `<`number of trees`>` represents the number of the trees in the input file
+  * `<`output`>` either `0` or `1`. Use `0` if you do not want the matrix to be printed out. Use `1` to print out the matrix.
+  * `<`rounds`>` Specifies the number of iterations. For all practical purposes, please use `1` as the value.
+
+For example, to run `mrsrf` on 2 nodes and 4 cores, using an input file specified by `test.tre` which contains 12 trees with 10 taxa each, run the following:
+
+```
+mpirun -np 2 src/mrsrf 4 test.tre 10 12 1 1 
+```
+
+This should produce the following RF Matrix:
+
+```
+0 2 1 5 5 5 5 5 5 5 1 5 
+2 0 1 5 4 5 4 5 4 5 1 5 
+1 1 0 5 5 5 5 5 5 5 0 5 
+5 5 5 0 1 1 2 1 2 0 5 1 
+5 4 5 1 0 2 1 2 1 1 5 2 
+5 5 5 1 2 0 1 1 2 1 5 1 
+5 4 5 2 1 1 0 2 1 2 5 2 
+5 5 5 1 2 1 2 0 1 1 5 0 
+5 4 5 2 1 2 1 1 0 2 5 1 
+5 5 5 0 1 1 2 1 2 0 5 1 
+1 1 0 5 5 5 5 5 5 5 0 5 
+5 5 5 1 2 1 2 0 1 1 5 0 
+```
+
+In the MrsRF release, you will find a sample tree file called `10taxa-12trees.tre`. By running MrsRF on that sample file, you should see the above RF matrix produced. The output will be located in the mrsrf-mpi-output/ directory.
+### Notes ###
+If the code does not compile out of box, it may be necessary to reset the `CPU_SET` definitions in `MapReduceScheduler.c`. This is due to architectural differences we have encountered over different machines.
+  * Please comment out the code associated with "new definitions" and uncomment the code section associated with "old definitions". This should be located near the top of `src/MapReduceScheduler.c`
+
+To compare the matrix your program genereates with ours, a Perl script called `compare_files.pl` is provided in the `peanuts` folder. This script can be used to compare two matrices. Alternatively, you can use:
+```
+diff -iB matrix1 matrix2
+```
+
+where `matrix1` and `matrix2` are the files containing the two matrices to be compared, respectively.
