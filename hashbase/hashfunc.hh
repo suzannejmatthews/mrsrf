@@ -25,7 +25,7 @@
 
 #include <iostream>
 #include <fstream>
- 
+#include <stdint.h> 
 #include "randomc.h" //MT random number generator
 
 typedef struct {
