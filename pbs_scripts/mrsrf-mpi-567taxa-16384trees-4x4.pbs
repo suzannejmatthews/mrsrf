@@ -1,0 +1,10 @@
+#PBS -l walltime=01:00:00
+#PBS -l nodes=4:ppn=1
+#PBS -q aglife
+#PBS -l mem=16384mb
+
+. /etc/profile.d/modules.sh
+module load openmpi/1.3.2/gcc/64
+cd $HOME/mrsrf-phoenix-brazos
+time -p mpirun -np 4 ./src/mrsrf-mpi 4 sample_trees/567-16384-1.tre 567 16384 0 1 
+exit 0
